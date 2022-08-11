@@ -9,7 +9,8 @@ class CartItem extends React.Component{
             title:'Phone',
             price : 9999,
             qty:1,
-            img:''
+            img:'',
+            tempNum:1
         }
         //this is also soln of this problem
         // this.increaseQuantity = this.increaseQuantity.bind(this);
@@ -21,6 +22,27 @@ class CartItem extends React.Component{
         this.setState({
             qty : this.state.qty + 1
         })
+
+
+        //This is definning batching ,i.e. When multiple times
+        //setState() function is called it is baching used
+        this.setState(
+            prevState => {
+                return {
+                tempNum: prevState.tempNum + 2
+                };
+            },()=>{ console.log(this.state.tempNum)}
+        );
+        this.setState(
+            prevState => {
+                return {
+                tempNum: prevState.tempNum + 3
+                };
+            },()=>{ console.log(this.state.tempNum)}
+        );
+
+
+
     }
     decreaseQuantity = () =>{
         if(this.state.qty >1){
@@ -35,7 +57,14 @@ class CartItem extends React.Component{
                 return {
                     qty : prevState.qty -1
                 }
+            } , ()=>{
+                console.log("Successfull added Quantity ",this.state);
             });
+
+            //we can write many .setState() function 
+            //No matter how many you write so, only last
+            // setState() function is  called
+            //because it is async() call function
         }
     }
     
