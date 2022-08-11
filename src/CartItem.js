@@ -4,8 +4,7 @@ import React from "react";
 class CartItem extends React.Component{
     constructor(){
         super();
-        // Object used to initialize value in items
-        this.count = 1;
+        // Object used to initialize value in item
         this.state={
             title:'Phone',
             price : 9999,
@@ -18,8 +17,26 @@ class CartItem extends React.Component{
     
     //Use Error function to solve this type of error
     increaseQuantity = () => {
-        console.log("This.state",this.state);
-        this.count++;
+        // This is pbject element to set value use .setState() function gives value in object
+        this.setState({
+            qty : this.state.qty + 1
+        })
+    }
+    decreaseQuantity = () =>{
+        if(this.state.qty >1){
+
+                //This is First method to set State
+            // this.setState({
+            //     qty : this.state.qty - 1
+            // })
+
+                //This is 2nd Method to setState()
+            this.setState((prevState)=>{
+                return {
+                    qty : prevState.qty -1
+                }
+            });
+        }
     }
     
     render (){
@@ -52,12 +69,13 @@ class CartItem extends React.Component{
                         alt="decrease" 
                         src="https://t3.ftcdn.net/jpg/03/73/49/86/240_F_373498649_nBxauQ0ipBSVrVcMpWWVmTpXu3BLvRyY.jpg" 
                         className="action-icon" 
+                        onClick={this.decreaseQuantity}
                         />
 
                         <img 
                         alt="delete" 
                         src="https://t4.ftcdn.net/jpg/01/90/89/15/240_F_190891550_N7uKp2aHE3mOc20dmtDytj7atgvbhdOu.jpg" 
-                        className="action-icon" 
+                        className="action-icon"
                         />  
 
                     </div>
