@@ -2,21 +2,7 @@
 import React from "react";
 
 class CartItem extends React.Component{
-    constructor(){
-        super();
-        // Object used to initialize value in item
-        this.state={
-            title:'Phone',
-            price : 9999,
-            qty:1,
-            img:'',
-            tempNum:1
-        }
-        //this is also soln of this problem
-        // this.increaseQuantity = this.increaseQuantity.bind(this);
-    }
     
-    //Use Error function to solve this type of error
     increaseQuantity = () => {
         // This is pbject element to set value use .setState() function gives value in object
         this.setState({
@@ -58,7 +44,7 @@ class CartItem extends React.Component{
                     qty : prevState.qty -1
                 }
             } , ()=>{
-                console.log("Successfull added Quantity ",this.state);
+                console.log("Successfull added Quantity CALLBACK func");
             });
 
             //we can write many .setState() function 
@@ -71,7 +57,8 @@ class CartItem extends React.Component{
     render (){
         console.log(this.props);
         // Used for short initialize object fromthe constructor
-        const { title , price , qty , img} = this.state;
+        
+        const { title , price , qty , img} = this.props.product;
         return (
             <div className="cart-Item">                             
                 <div className="left-block">
@@ -123,8 +110,6 @@ const style = {
         backgroundColor:'grey'
     }
 }
-
-
 
 // This class import in index file
 export default CartItem;
