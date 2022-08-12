@@ -69,11 +69,11 @@ class CartItem extends React.Component{
     }
     
     render (){
-
+        console.log(this.props);
         // Used for short initialize object fromthe constructor
         const { title , price , qty , img} = this.state;
         return (
-            <div className="cart-Item">
+            <div className="cart-Item">                             
                 <div className="left-block">
                     {/* Here we add the style CSS */}
                     {/* src={this.state.img} */}
