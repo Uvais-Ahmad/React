@@ -52,7 +52,20 @@ class Cart extends React.Component{
         })
     }
 
-    
+    handleDecreaseQuantity = (product)=>{
+        console.log('Decreasing request is called',product);
+        //First we find on Which products we chamges inside the state()
+        const {products} = this.state;
+        const index = products.indexOf(product);
+        //set VALUE OF qty on the given index product
+
+        if(products[index].qty >1 ){ products[index].qty -= 1; }
+        
+        this.setState({
+            products
+        })
+
+    }
 
     render(){
         const { products} = this.state;
@@ -71,6 +84,7 @@ class Cart extends React.Component{
                     product={product}
                     key = {product.id}
                     onIncreaseQuantity = {this.handleIncreaseQuantity}
+                    onDecreasingQuantity = {this.handleDecreaseQuantity}
                     // func={()=>console.log('Something')}
                     // jsx={<h1>testing...</h1>}           //Thsi si Function that use to send JSX file
                     />
