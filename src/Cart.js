@@ -42,6 +42,17 @@ class Cart extends React.Component{
         }
     }
 
+    handleIncreaseQuantity = (product)=>{
+        const { products } = this.state;
+        const index = products.indexOf(product);
+        // Now change the Quantity of product[index]
+        products[index].qty +=1;
+        this.setState({
+            products: products
+        })
+    }
+
+    
 
     render(){
         const { products} = this.state;
@@ -59,6 +70,7 @@ class Cart extends React.Component{
                     <CartItem
                     product={product}
                     key = {product.id}
+                    onIncreaseQuantity = {this.handleIncreaseQuantity}
                     // func={()=>console.log('Something')}
                     // jsx={<h1>testing...</h1>}           //Thsi si Function that use to send JSX file
                     />

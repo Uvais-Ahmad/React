@@ -78,14 +78,18 @@ class CartItem extends React.Component{
                         alt="increase" 
                         src="https://t4.ftcdn.net/jpg/01/07/62/07/240_F_107620769_UwNVSoXnKS4VNcOKoZjPohlEPn83oE38.jpg" 
                         className="action-icon"
-                        onClick= {this.increaseQuantity}
+                        // onClick= {this.increaseQuantity}
+                        // Now we have function in props used to increase and sent from CART
+                        onClick = {()=>this.props.onIncreaseQuantity(this.props.product)}
                         />
 
                         <img 
                         alt="decrease" 
                         src="https://t3.ftcdn.net/jpg/03/73/49/86/240_F_373498649_nBxauQ0ipBSVrVcMpWWVmTpXu3BLvRyY.jpg" 
                         className="action-icon" 
-                        onClick={this.decreaseQuantity}
+                        // onClick={this.decreaseQuantity}
+                        //Each CartItem Hold the property trto decre in props argu
+                        onClick={()=>this.props.onDecreasingQuantity(this.props.product)}
                         />
 
                         <img 
