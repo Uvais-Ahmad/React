@@ -59,6 +59,12 @@ class CartItem extends React.Component{
         // Used for short initialize object fromthe constructor
         
         const { title , price , qty , img} = this.props.product;
+        // const {
+        //     product,
+        //     onIncreaseQuantity,
+        //     onDecreasingQuantity,
+        //     onDeleting
+        // } = this.props;
         return (
             <div className="cart-Item">                             
                 <div className="left-block">
@@ -96,6 +102,7 @@ class CartItem extends React.Component{
                         alt="delete" 
                         src="https://t4.ftcdn.net/jpg/01/90/89/15/240_F_190891550_N7uKp2aHE3mOc20dmtDytj7atgvbhdOu.jpg" 
                         className="action-icon"
+                        onClick={()=> this.props.onDeleting(this.props.product.id)}
                         />  
 
                     </div>

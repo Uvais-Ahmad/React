@@ -60,12 +60,25 @@ class Cart extends React.Component{
         //set VALUE OF qty on the given index product
 
         if(products[index].qty >1 ){ products[index].qty -= 1; }
-        
+
         this.setState({
             products
         })
 
     }
+    handleDelete = (id)=>{
+        console.log('Item will be delete');
+        const {products} = this.state;
+
+        //filter() method used to create new Array with some operation
+        const items = products.filter(item=> item.id !== id);
+
+        //'item' is the new Array after deleting the records
+        this.setState({
+            products : items
+
+        })
+     }
 
     render(){
         const { products} = this.state;
@@ -85,6 +98,7 @@ class Cart extends React.Component{
                     key = {product.id}
                     onIncreaseQuantity = {this.handleIncreaseQuantity}
                     onDecreasingQuantity = {this.handleDecreaseQuantity}
+                    onDeleting = { this.handleDelete }
                     // func={()=>console.log('Something')}
                     // jsx={<h1>testing...</h1>}           //Thsi si Function that use to send JSX file
                     />
