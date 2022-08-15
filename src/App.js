@@ -116,7 +116,7 @@ getCartCount = ()=>{
         
         />
         {/* <h1>Hi This is render tag</h1> */}
-        <div style={{padding :20 , fontSize :20 ,color:'darkNightBlue'}}>Total : {this.getCartTotal()}</div>
+        <div style={{padding :20 , fontSize :20 ,color:'darkBlue'}}>Total : {this.getCartTotal()}</div>
       </div>
     );
   }
