@@ -3,7 +3,7 @@ import React from "react";
 
 //This conver from class component to Functional component so bydefault props argu used
 const CartItem = (props) =>{
-    const { title , price , qty , img} =props.product;
+    const { title , price , qty} =props.product;
     const {
         product,
         onIncreaseQuantity,
@@ -15,7 +15,7 @@ const CartItem = (props) =>{
             <div className="left-block">
                 {/* Here we add the style CSS */}
                 {/* src={this.state.img} */}
-                <img style={style.Image} src={img}  alt=""/>
+                <img style={style.Image} src={product.img}  alt=""/>
             </div>
 
             <div className="right-block">
