@@ -10,6 +10,7 @@ import {
   updateDoc,
   deleteDoc,
   onSnapshot,
+  addDoc,
   query,
   where,
   orderBy,
@@ -25,7 +26,8 @@ class App extends React.Component {
     //This is State which have diff diff types 
     //Now we ,map it and return CartItem With values
     this.state={
-        products:[]
+        products:[],
+        loading:true
     }
   }
   
@@ -44,11 +46,16 @@ class App extends React.Component {
       const getProducts = [];
       querySnapshot.forEach((doc) => {
         const product = doc.data();  
+        //Each attr should have a uniques id So we set Here
         product.id = doc.id;
+
         getProducts.push(product);
       });
       console.log(getProducts);
-      this.setState({ products: getProducts, loading: false });
+      this.setState({
+        products: getProducts,
+        loading: false 
+      });
     });
   }
   
@@ -121,12 +128,31 @@ getCartCount = ()=>{
     })
     return CartTotal;
  }
+
+  addProduct = ()=>{
+    const docRef = collection(db , 'products')
+    addDoc(docRef , {
+      img:'',
+      qty:12,
+      price:1099,
+      title:'Product'
+    })
+    .then((docRef)=>{
+      console.log('Docs Added ',docRef)
+    })
+    .catch((err)=>{
+      console.log("Error Occur ",err)
+    });
+  }
  
   render() {
-    const { products} = this.state;
+    const { products , loading} = this.state;
     return (
       <div className="App">
         <Navbar count = {this.getCartCount()}/>
+
+        <button onClick={this.addProduct}>Add Product</button>
+
         <Cart
           products =  {products}
           onIncreaseQuantity = {this.handleIncreaseQuantity}
@@ -134,7 +160,7 @@ getCartCount = ()=>{
           onDeleting = { this.handleDelete }
 
         />
-        {/* <h1>Hi This is render tag</h1> */}
+        {loading && <h1>Loading ...</h1> }
         <div style={{padding :20 , fontSize :20 ,color:'darkBlue'}}>Total : {this.getCartTotal()}</div>
       </div>
     );
