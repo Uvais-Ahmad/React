@@ -68,3 +68,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+###this is the file used to make the connection to the firebase
+https://ninjasfiles.s3.amazonaws.com/253584f21bd7168050ea1ec0fa538aa5_shubham_gupta_attachment_directions.txt

@@ -1,7 +1,21 @@
 import React from 'react';
-// import CartItem from './CartItem';
 import Cart from './Cart';
 import Navbar from './Navbar';
+
+//firebase setup step 2
+import {
+  doc,
+  setDoc,
+  collection,
+  updateDoc,
+  deleteDoc,
+  onSnapshot,
+  query,
+  where,
+  orderBy,
+  // doc,
+} from "firebase/firestore";
+import { db } from "./index";
 
 
 class App extends React.Component {
@@ -11,77 +25,82 @@ class App extends React.Component {
     //This is State which have diff diff types 
     //Now we ,map it and return CartItem With values
     this.state={
-        products:[
-            {
-                price:999,
-                title:'Mobile Phone',
-                qty:7,
-                img:'https://www.91-img.com/gallery_images_uploads/d/7/d7cf5e2b1a3a3dfcca8a8dbb524fb11a8fb1c8e8.JPG?tr=h-550,w-0,c-at_max',
-                id : 1
-            },
-            {
-                price:9999,
-                title:'Laptops',
-                qty:3,
-                img:'https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwY29tcHV0ZXJ8ZW58MHx8MHx8&w=1000&q=80',
-                id:2
-            },
-            {
-                price:99,
-                title:'Watches',
-                qty:5,
-                img:'https://cdn.luxe.digital/media/20220419083025/best-men-watches-nordgreen-native-review-luxe-digital-780x520.jpg',
-                id:3
-            },
-            {
-                price:299,
-                title:'Earbuds',
-                qty:9,
-                img:'https://m.media-amazon.com/images/I/614bL2rQtcL._AC_SX679_.jpg',
-                id:4
-            }
-        ]
+        products:[]
     }
-}
+  }
+  
+  //function to change 
+  // async componentDidMount() {
+  //this is a realtime listener if you change anything in firebase ui will automatically updated 
+
+    // const q = query(
+    //   collection(db, "products"),
+    //   where("price", ">", 0),
+    //   orderBy("price")
+    //  );
+    componentDidMount() {
+      const q = collection(db, "products");
+      const unsub = onSnapshot(q, (querySnapshot) => {
+      const getProducts = [];
+      querySnapshot.forEach((doc) => {
+        const product = doc.data();  
+        product.id = doc.id;
+        getProducts.push(product);
+      });
+      console.log(getProducts);
+      this.setState({ products: getProducts, loading: false });
+    });
+  }
+  
 
 handleIncreaseQuantity = (product)=>{
     const { products } = this.state;
     const index = products.indexOf(product);
     // Now change the Quantity of product[index]
-    products[index].qty +=1;
-    this.setState({
-        products: products
-    })
+    const docRef = doc(collection(db, "products") , products[index].id)
+    updateDoc(docRef , {
+      qty: products[index].qty + 1
+    });
+    // products[index].qty +=1;
+    // this.setState({
+    //     products: products
+    // })
 }
 
 handleDecreaseQuantity = (product)=>{
-    console.log('Decreasing request is called',product);
     //First we find on Which products we chamges inside the state()
     const {products} = this.state;
     const index = products.indexOf(product);
     //set VALUE OF qty on the given index product
-
-    if(products[index].qty >1 ){ products[index].qty -= 1; }
-
-    this.setState({
-        products
-    })
-
+    const docRef = doc(collection(db,'products') , products[index].id);
+    if(products[index].qty > 1){
+      updateDoc(docRef , {
+        qty : products[index].qty - 1
+      });
+    } 
+    // if(products[index].qty >1 ){ products[index].qty -= 1; }
+    // this.setState({
+    //     products
+    // })
 }
-handleDelete = (id)=>{
-    console.log('Item will be delete');
-    const {products} = this.state;
 
+handleDelete = (productToDelete)=>{
+    // const {products} = this.state;
     //filter() method used to create new Array with some operation
-    const items = products.filter(item=> item.id !== id);
-
+    // const items = products.filter(item=> item.id !== id);
     //'item' is the new Array after deleting the records
-    this.setState({
-        products : items
-        
-
-    })
+    // this.setState({
+    //     products : items
+    // })
     
+    const docRef = doc(collection(db , "products") , productToDelete);
+    deleteDoc(docRef)
+    .then(()=>{
+      console.log('Product is deleted');
+    })
+    .catch((err)=>{
+      console.log(err);
+    });
  }
 
 getCartCount = ()=>{
@@ -113,7 +132,7 @@ getCartCount = ()=>{
           onIncreaseQuantity = {this.handleIncreaseQuantity}
           onDecreasingQuantity = {this.handleDecreaseQuantity}
           onDeleting = { this.handleDelete }
-        
+
         />
         {/* <h1>Hi This is render tag</h1> */}
         <div style={{padding :20 , fontSize :20 ,color:'darkBlue'}}>Total : {this.getCartTotal()}</div>
